@@ -1,0 +1,20 @@
+version: '3'
+services:
+  mysql_db:
+    image: "mysql:8.0"
+    restart: always
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_DATABASE: coin_bank
+      MYSQL_USER: coin
+      MYSQL_PASSWORD: coinbankpass143
+      MYSQL_ROOT_PASSWORD: coinbankrootpass143
+  api_service:
+    build: .
+    restart: always
+    depends_on:
+      - mysql_db
+    ports:
+      - "8080:8080"
+    command: sh -c './wait-for mysql_db:3306 -- npm start'
