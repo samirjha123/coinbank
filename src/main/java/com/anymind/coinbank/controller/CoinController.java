@@ -1,26 +1,42 @@
 package com.anymind.coinbank.controller;
 
+import com.anymind.coinbank.constants.Constants;
 import com.anymind.coinbank.model.CoinInfoModel;
+import com.anymind.coinbank.service.CoinInfoService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.util.Arrays;
 
-@Controller
+@RestController
+@RequestMapping(Constants.COIN)
 public class CoinController {
 
-    @PostMapping(value = "/registration")
-    public ModelAndView createNewUser(@Valid CoinInfoModel user, BindingResult bindingResult) {
+    @Autowired
+    private CoinInfoService coinInfoService;
 
-        return new ModelAndView();
+    /**
+     * deosit coin
+     * @param score
+     * @return
+     */
+    @PostMapping(Constants.DEPOSIT)
+    public ResponseEntity<CoinInfoModel> depositCoin(@Valid @RequestBody CoinInfoModel score) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(coinInfoService.depositCoin(score));
     }
 
-    @GetMapping(value="/admin/home")
-    public ModelAndView home() {
-
-        return new ModelAndView();
+    @GetMapping(value = Constants.LIST)
+    public ResponseEntity<Page> scorePageable(Pageable pageable, @RequestParam(required = false)  String startTime, @RequestParam(required = false)  String endTime) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(coinInfoService.findCoins(pageable, startTime, endTime));
     }
 }
