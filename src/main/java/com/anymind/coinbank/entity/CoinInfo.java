@@ -1,23 +1,31 @@
 package com.anymind.coinbank.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.time.OffsetDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "coin_info")
 public class CoinInfo {
     @Id
-    @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "amount")
     private Double amount;
 
-    @Column(name = "datetime")
-    private String datetime;
+    @Column(name = "date_time")
+    private ZonedDateTime datetime;
+
+    @Column(name = "zone_id")
+    private String zoneId;
 }
