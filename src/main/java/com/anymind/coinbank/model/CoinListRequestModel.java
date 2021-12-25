@@ -12,15 +12,13 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class CoinInfoModel implements Serializable {
+public class CoinListRequestModel implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private Long id;
+    @NotNull
+    private String startDatetime;
 
     @NotNull
-    private Double amount;
-
-    @NotNull
-    private String datetime;
+    private String endDatetime;
 }

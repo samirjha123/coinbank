@@ -11,6 +11,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.ZonedDateTime;
+
 @Service
 @Slf4j
 public class CoinInfoService {
@@ -44,7 +46,9 @@ public class CoinInfoService {
     @Transactional(readOnly = true)
     public Page<CoinInfo> findCoins(Pageable pageable, String startTime, String endTime) {
         try {
-            return coinInfoRepository.findAll(pageable);
+            System.out.println(startTime);
+            System.out.println(endTime);
+            return coinInfoRepository.findByDatetimeBetween(ZonedDateTime.parse(startTime), ZonedDateTime.parse(endTime), pageable);
         } catch (Exception e) {
             log.error(e.getMessage());
             throw e;

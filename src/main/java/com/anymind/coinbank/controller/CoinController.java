@@ -2,6 +2,7 @@ package com.anymind.coinbank.controller;
 
 import com.anymind.coinbank.constants.Constants;
 import com.anymind.coinbank.model.CoinInfoModel;
+import com.anymind.coinbank.model.CoinListRequestModel;
 import com.anymind.coinbank.service.CoinInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.time.ZonedDateTime;
 import java.util.Arrays;
 
 @RestController
@@ -25,18 +27,24 @@ public class CoinController {
 
     /**
      * deosit coin
-     * @param score
+     * @param coinInfoModel
      * @return
      */
     @PostMapping(Constants.DEPOSIT)
-    public ResponseEntity<CoinInfoModel> depositCoin(@Valid @RequestBody CoinInfoModel score) {
+    public ResponseEntity<CoinInfoModel> depositCoin(@Valid @RequestBody CoinInfoModel coinInfoModel) {
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(coinInfoService.depositCoin(score));
+                .body(coinInfoService.depositCoin(coinInfoModel));
     }
 
-    @GetMapping(value = Constants.LIST)
-    public ResponseEntity<Page> scorePageable(Pageable pageable, @RequestParam(required = false)  String startTime, @RequestParam(required = false)  String endTime) {
+    /**
+     * list coins
+     * @param pageable
+     * @param req
+     * @return
+     */
+    @PostMapping(value = Constants.LIST)
+    public ResponseEntity<Page> scorePageable(Pageable pageable, @Valid @RequestBody CoinListRequestModel req) {
         return ResponseEntity.status(HttpStatus.OK)
-                .body(coinInfoService.findCoins(pageable, startTime, endTime));
+                .body(coinInfoService.findCoins(pageable, req.getStartDatetime(), req.getEndDatetime()));
     }
 }
