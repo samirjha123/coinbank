@@ -9,14 +9,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
-import java.time.ZonedDateTime;
-import java.util.Arrays;
 
 @RestController
 @RequestMapping(Constants.COIN)
@@ -26,7 +21,7 @@ public class CoinController {
     private CoinInfoService coinInfoService;
 
     /**
-     * deosit coin
+     * deposit coin
      * @param coinInfoModel
      * @return
      */
@@ -37,7 +32,7 @@ public class CoinController {
     }
 
     /**
-     * list coins
+     * list coins balance on each hour
      * @param pageable
      * @param req
      * @return

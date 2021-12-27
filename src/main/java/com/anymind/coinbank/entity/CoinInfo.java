@@ -5,9 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.OffsetDateTime;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 
 @Data
@@ -20,8 +17,14 @@ public class CoinInfo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "transaction_type")
+    private String transactionType;
+
     @Column(name = "amount")
     private Double amount;
+
+    @Column(name = "balance")
+    private Double balance;
 
     @Column(name = "date_time")
     private ZonedDateTime datetime;

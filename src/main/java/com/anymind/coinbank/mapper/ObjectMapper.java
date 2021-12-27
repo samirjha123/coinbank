@@ -2,10 +2,9 @@ package com.anymind.coinbank.mapper;
 
 import com.anymind.coinbank.entity.CoinInfo;
 import com.anymind.coinbank.model.CoinInfoModel;
-import org.mapstruct.AfterMapping;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
+import com.anymind.coinbank.model.CoinListResponseModel;
+import org.mapstruct.*;
+import org.mapstruct.ap.shaded.freemarker.template.utility.StringUtil;
 import org.mapstruct.factory.Mappers;
 
 import java.io.Serializable;
@@ -30,5 +29,12 @@ public interface ObjectMapper extends Serializable {
     @AfterMapping
     default void setZoneId(CoinInfoModel coinInfoModel, @MappingTarget CoinInfo coinInfo){
        coinInfo.setZoneId(ZonedDateTime.parse(coinInfoModel.getDatetime()).getZone().toString());
+    }
+
+    CoinListResponseModel entityToResponseModel(CoinInfo coinInfo);
+
+    @AfterMapping
+    default void setDatetime(CoinInfo coinInfoModel, @MappingTarget CoinListResponseModel coinInfo){
+        coinInfo.setDatetime(ZonedDateTime.parse(String.valueOf(coinInfoModel.getDatetime())).toString());
     }
 }

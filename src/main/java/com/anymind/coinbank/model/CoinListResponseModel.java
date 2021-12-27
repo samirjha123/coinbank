@@ -1,6 +1,5 @@
 package com.anymind.coinbank.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,15 +12,12 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class CoinInfoModel implements Serializable {
+public class CoinListResponseModel implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @JsonIgnore
-    private Long id;
-
     @NotNull
-    private Double amount;
+    private Double balance;
 
     @NotNull
     private String datetime;
