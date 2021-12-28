@@ -5,8 +5,7 @@ A Java coding skill test.
 # How to build
 * Close previous running container: -> docker-compose down
 * Build jar file: -> mvn clean install
-* Build docker image: -> docker-compose build
-* Execute docker image: -> docker-compose up
+* Build and execute docker image: ->  docker-compose up --build -d
 
 # I/Fs specification:
 ## 1. {{end-point}}/coin/deposit

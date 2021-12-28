@@ -26,6 +26,7 @@ public class CoinController {
      * @return
      */
     @PostMapping(Constants.DEPOSIT)
+    @ResponseBody
     public ResponseEntity<CoinInfoModel> depositCoin(@Valid @RequestBody CoinInfoModel coinInfoModel) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(coinInfoService.depositCoin(coinInfoModel));
@@ -38,8 +39,9 @@ public class CoinController {
      * @return
      */
     @PostMapping(value = Constants.LIST)
+    @ResponseBody
     public ResponseEntity<Page> scorePageable(Pageable pageable, @Valid @RequestBody CoinListRequestModel req) {
         return ResponseEntity.status(HttpStatus.OK)
-                .body(coinInfoService.findCoins(pageable, req.getStartDatetime(), req.getEndDatetime()));
+                .body(coinInfoService.findCoins(pageable, req));
     }
 }
