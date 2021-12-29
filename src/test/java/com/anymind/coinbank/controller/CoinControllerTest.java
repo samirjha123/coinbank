@@ -35,7 +35,7 @@ class CoinControllerTest {
     }
 
     @Test
-    void testRegisterScore() throws Exception {
+    void testDepositCoin() throws Exception {
 
         CoinInfoModel coinInfo = new CoinInfoModel();
         coinInfo.setId(2L);
@@ -48,7 +48,33 @@ class CoinControllerTest {
     }
 
     @Test
-    void evaluatesPageableParameter() throws Exception {
+    void testDepositCoinInvalidAmount() throws Exception {
+
+        CoinInfoModel coinInfo = new CoinInfoModel();
+        coinInfo.setId(2L);
+        coinInfo.setAmount(10000000.0);
+        coinInfo.setDatetime("2021-08-16T20:43:39+05:30");
+
+        String json = mapper.writeValueAsString(coinInfo);
+        mockMvc.perform(post("/coin/deposit").contentType(MediaType.APPLICATION_JSON).characterEncoding("utf-8")
+                .content(json).accept(MediaType.APPLICATION_JSON)).andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void testDepositCoinInvalidDate() throws Exception {
+
+        CoinInfoModel coinInfo = new CoinInfoModel();
+        coinInfo.setId(2L);
+        coinInfo.setAmount(100.0);
+        coinInfo.setDatetime("2021-13-16T20:43:39+05:30");
+
+        String json = mapper.writeValueAsString(coinInfo);
+        mockMvc.perform(post("/coin/deposit").contentType(MediaType.APPLICATION_JSON).characterEncoding("utf-8")
+                .content(json).accept(MediaType.APPLICATION_JSON)).andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void testListCoin() throws Exception {
 
         CoinListRequestModel coinInfo = new CoinListRequestModel();
         coinInfo.setStartDatetime("2021-08-16T07:43:39+05:30");
@@ -57,5 +83,29 @@ class CoinControllerTest {
 
         mockMvc.perform(post("/coin/list").contentType(MediaType.APPLICATION_JSON).characterEncoding("utf-8")
                         .content(json).accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
+    }
+
+    @Test
+    void testListCoinInvalidStartDate() throws Exception {
+
+        CoinListRequestModel coinInfo = new CoinListRequestModel();
+        coinInfo.setStartDatetime("20216-08-16T07:43:39+05:30");
+        coinInfo.setEndDatetime("2021-08-16T20:43:39+05:30");
+        String json = mapper.writeValueAsString(coinInfo);
+
+        mockMvc.perform(post("/coin/list").contentType(MediaType.APPLICATION_JSON).characterEncoding("utf-8")
+                .content(json).accept(MediaType.APPLICATION_JSON)).andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void testListCoinInvalidEndDate() throws Exception {
+
+        CoinListRequestModel coinInfo = new CoinListRequestModel();
+        coinInfo.setStartDatetime("2021-08-16T07:43:39+05:30");
+        coinInfo.setEndDatetime("2021-08-16T25:43:39+05:30");
+        String json = mapper.writeValueAsString(coinInfo);
+
+        mockMvc.perform(post("/coin/list").contentType(MediaType.APPLICATION_JSON).characterEncoding("utf-8")
+                .content(json).accept(MediaType.APPLICATION_JSON)).andExpect(status().isBadRequest());
     }
 }
