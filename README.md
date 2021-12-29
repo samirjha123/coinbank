@@ -2,6 +2,11 @@
 
 A Java coding skill test.
 
+# Requirements
+
+`docker`
+`docker-compose`
+
 # How to build
 * Close previous running container: -> docker-compose down
 * Build jar file: -> mvn clean install
@@ -43,11 +48,11 @@ curl --location --request POST 'localhost:8080/coin/list' \
     "content": [
         {
             "balance": 1264.0,
-            "datetime": "2019-10-05T08:00:00Z[GMT]"
+            "datetime": "2019-10-05T08:00:00Z"
         },
         {
             "balance": 4414.0,
-            "datetime": "2019-10-05T09:00:00Z[GMT]"
+            "datetime": "2019-10-05T09:00:00Z"
         }
     ],
     "pageable": {
