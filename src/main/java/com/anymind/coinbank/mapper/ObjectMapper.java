@@ -27,19 +27,18 @@ public interface ObjectMapper extends Serializable {
         try {
             coinInfo.setDatetime(ZonedDateTime.parse(coinInfoModel.getDatetime()));
         } catch (DateTimeParseException e) {
-
+            throw new IllegalArgumentException("Unable to format datetime: "+ coinInfoModel.getDatetime());
         }
     }
 
     @AfterMapping
-    default void setZoneId(CoinInfoModel coinInfoModel, @MappingTarget CoinInfo coinInfo){
-       coinInfo.setZoneId(ZonedDateTime.parse(coinInfoModel.getDatetime()).getZone().toString());
+    default void setZoneId(CoinInfoModel coinInfoModel, @MappingTarget CoinInfo coinInfo) {
+        try {
+            coinInfo.setZoneId(String.valueOf(ZonedDateTime.parse(coinInfoModel.getDatetime()).getZone()));
+        } catch (DateTimeParseException e) {
+            throw new IllegalArgumentException("Unable to format datetime: " + coinInfoModel.getDatetime());
+        }
     }
 
     CoinListResponseModel entityToResponseModel(BalanceInfo balanceInfo);
-
-    @AfterMapping
-    default void setDatetime(CoinInfo coinInfoModel, @MappingTarget CoinListResponseModel coinInfo){
-        coinInfo.setDatetime(ZonedDateTime.parse(String.valueOf(coinInfoModel.getDatetime())).toString());
-    }
 }

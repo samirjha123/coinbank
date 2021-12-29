@@ -2,6 +2,8 @@ package com.anymind.coinbank.constants;
 
 public class Constants {
 
+    private Constants(){}
+
     public static final String COIN = "coin";
 
     public static final String DEPOSIT = "deposit";

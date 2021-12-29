@@ -18,7 +18,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ActiveProfiles("test")
 @SpringBootTest
 @AutoConfigureMockMvc
-public class CoinControllerTest {
+class CoinControllerTest {
 
     @Autowired
     private CoinController controller;
@@ -30,12 +30,12 @@ public class CoinControllerTest {
     private static ObjectMapper mapper = new ObjectMapper();
 
     @Test
-    public void contextLoads() throws Exception {
+    void contextLoads() throws Exception {
         assertThat(controller).isNotNull();
     }
 
     @Test
-    public void testRegisterScore() throws Exception {
+    void testRegisterScore() throws Exception {
 
         CoinInfoModel coinInfo = new CoinInfoModel();
         coinInfo.setId(2L);

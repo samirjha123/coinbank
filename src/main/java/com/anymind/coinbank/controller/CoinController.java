@@ -5,7 +5,6 @@ import com.anymind.coinbank.model.CoinInfoModel;
 import com.anymind.coinbank.model.CoinListRequestModel;
 import com.anymind.coinbank.service.CoinInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +26,7 @@ public class CoinController {
      */
     @PostMapping(Constants.DEPOSIT)
     @ResponseBody
-    public ResponseEntity<CoinInfoModel> depositCoin(@Valid @RequestBody CoinInfoModel coinInfoModel) {
+    public ResponseEntity depositCoin(@Valid @RequestBody CoinInfoModel coinInfoModel) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(coinInfoService.depositCoin(coinInfoModel));
     }
@@ -40,7 +39,7 @@ public class CoinController {
      */
     @PostMapping(value = Constants.LIST)
     @ResponseBody
-    public ResponseEntity<Page> scorePageable(Pageable pageable, @Valid @RequestBody CoinListRequestModel req) {
+    public ResponseEntity scorePageable(Pageable pageable, @Valid @RequestBody CoinListRequestModel req) {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(coinInfoService.findCoins(pageable, req));
     }

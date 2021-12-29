@@ -15,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 
@@ -39,17 +40,21 @@ public class CoinInfoService {
             CoinInfo coinInfo = ObjectMapper.OBJECT_MAPPER.modelToEntity(coinInfoModel);
             coinInfo.setTransactionType("deposit");
 
-            BalanceInfo balanceInfo = new BalanceInfo();
             BalanceInfo last = balanceInfoRepository.findTopByOrderByIdDesc();
+
+            BalanceInfo balanceInfo = new BalanceInfo();
             balanceInfo.setBalance((last != null ? last.getBalance() : 0) + coinInfo.getAmount());
-            balanceInfo.setDatetime(coinInfo.getDatetime().toInstant().truncatedTo(ChronoUnit.HOURS));
-            if(last != null && last.getDatetime() != null){
-                if(last.getDatetime().equals(balanceInfo.getDatetime())) {
-                    balanceInfoRepository.deleteById(last.getId());
-                } else if(balanceInfo.getDatetime().isBefore(last.getDatetime())){
-                    throw new IllegalArgumentException("Please retry as deposit got delayed");
-                }
+            Instant dateHoursOnly = coinInfo.getDatetime().toInstant().truncatedTo(ChronoUnit.HOURS);
+            balanceInfo.setDatetime(dateHoursOnly);
+
+            //if request got delayed or within same hour range
+            if(last != null && last.getDatetime() != null && last.getDatetime().compareTo(dateHoursOnly) >= 0) {
+                balanceInfoRepository.deleteById(last.getId());
+
+                //delayed request treated as current deposit in balance only
+                balanceInfo.setDatetime(last.getDatetime());
             }
+
             balanceInfoRepository.save(balanceInfo);
             return ObjectMapper.OBJECT_MAPPER.entityToModel(coinInfoRepository.save(coinInfo));
         } catch (Exception e) {
@@ -68,10 +73,7 @@ public class CoinInfoService {
     public Page<CoinListResponseModel> findCoins(Pageable pageable, CoinListRequestModel req) {
         try {
             Page<BalanceInfo> fromEntity = balanceInfoRepository.findByDatetimeBetweenOrderByDatetimeAsc(ZonedDateTime.parse(req.getStartDatetime()).toInstant(), ZonedDateTime.parse(req.getEndDatetime()).toInstant(), pageable);
-            return fromEntity.map(entity -> {
-                CoinListResponseModel dto = ObjectMapper.OBJECT_MAPPER.entityToResponseModel(entity);
-                return dto;
-            });
+            return fromEntity.map(entity -> ObjectMapper.OBJECT_MAPPER.entityToResponseModel(entity));
         } catch (Exception e) {
             log.error(e.getMessage());
             throw e;
