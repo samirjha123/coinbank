@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: coinbank
+  data:
+    mongodb:
+      uri: mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@localhost/${MONGO_DATABASE}
+      #authentication-database: admin
+      #uri: mongodb://myUserAdmin:abc123@localhost:27017/admin
+      #uri: mongodb://piotr:Piot_123@localhost:27017/admin
+  output.ansi.enabled: ALWAYS
+logging:
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} ${LOG_LEVEL_PATTERN:-%5p} %m%n"
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS

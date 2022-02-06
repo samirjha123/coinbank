@@ -44,7 +44,7 @@ public class CoinInfoService {
 
             BalanceInfo balanceInfo = new BalanceInfo();
             balanceInfo.setBalance((last != null ? last.getBalance() : 0) + coinInfo.getAmount());
-            Instant dateHoursOnly = coinInfo.getDatetime().toInstant().truncatedTo(ChronoUnit.HOURS);
+            Instant dateHoursOnly = ZonedDateTime.parse(coinInfo.getDatetime()).toInstant().truncatedTo(ChronoUnit.HOURS);
             balanceInfo.setDatetime(dateHoursOnly);
 
             //if request got delayed or within same hour range

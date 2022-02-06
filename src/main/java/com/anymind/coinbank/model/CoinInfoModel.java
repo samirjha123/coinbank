@@ -13,6 +13,7 @@ import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 @Data
 @AllArgsConstructor
@@ -23,7 +24,7 @@ public class CoinInfoModel implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @JsonIgnore
-    private Long id;
+    private String id;
 
     @NotNull
     @DecimalMax("9999999.99999999") @DecimalMin("0.00000001")

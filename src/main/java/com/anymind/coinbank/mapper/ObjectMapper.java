@@ -25,7 +25,7 @@ public interface ObjectMapper extends Serializable {
     @AfterMapping
     default void setDatetime(CoinInfoModel coinInfoModel, @MappingTarget CoinInfo coinInfo) {
         try {
-            coinInfo.setDatetime(ZonedDateTime.parse(coinInfoModel.getDatetime()));
+            coinInfo.setDatetime(String.valueOf(ZonedDateTime.parse(coinInfoModel.getDatetime())));
         } catch (DateTimeParseException e) {
             throw new IllegalArgumentException("Unable to format datetime: "+ coinInfoModel.getDatetime());
         }
