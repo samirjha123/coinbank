@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.math.BigDecimal;
 
 @Data
 @AllArgsConstructor
@@ -18,7 +17,7 @@ public class CoinListResponseModel implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @NotNull
-    private BigDecimal balance;
+    private Double balance;
 
     @NotNull
     private String datetime;

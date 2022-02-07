@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.annotation.Id;
 
-import java.math.BigDecimal;
 import java.time.Instant;
 
 @Data

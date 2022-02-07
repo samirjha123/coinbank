@@ -13,7 +13,6 @@ import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
-import java.math.BigDecimal;
 
 @Data
 @AllArgsConstructor
