@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: coinbank
-          image: samirjha123/coinbank:0.0.4-SNAPSHOT-2
+          image: samirjha123/coinbank:0.0.4-SNAPSHOT-14
           ports:
             - containerPort: 8080
           env:
@@ -39,22 +39,22 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: mongodb
+  name: mongodb-service
   labels:
-    app: mongodb
+    app: mongodb-service
 spec:
   ports:
     - port: 27017
       protocol: TCP
   selector:
-    app: mongodb
+    app: coinbank
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: coinbank
+  name: coinbank-service
   labels:
-    app: coinbank
+    app: coinbank-service
     spring-boot: "true"
 spec:
   ports:

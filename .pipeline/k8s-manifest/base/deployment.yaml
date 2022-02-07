@@ -20,6 +20,8 @@ spec:
           ports:
             - containerPort: 8080
           env:
+            - name: LOG_PATH
+              value: var/log/api
             - name: MONGO_DATABASE
               valueFrom:
                 configMapKeyRef:

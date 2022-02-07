@@ -7,10 +7,28 @@ A Java coding skill test.
 `docker`
 `docker-compose`
 
-# How to build
+# Deployment using docker-compose:
 * Close previous running container: -> docker-compose down
 * Build jar file: -> mvn clean install
 * Build and execute docker image: ->  docker-compose up --build -d
+
+# Deployment using k8s:
+### Build docker image
+* docker build --tag coinbank:0.0.1-SNAPSHOT .
+### Tag Image
+* docker tag coinbank:0.0.1-SNAPSHOT samirjha123/coinbank:0.0.1-SNAPSHOT
+### Push image to docker hub
+* docker push samirjha123/coinbank:0.0.1-SNAPSHOT
+### Deploy application in DEV profile
+* kubectl apply -k .pipeline/k8s-manifest/overlays/dev
+### Verify pod and service status
+* kubectl get all
+### forward 8080 port for local access
+* kubectl port-forward svc/coinbank 8080:8080
+
+### Application log:
+* kubectl exec -it coinbank-cb445759-s527w --container coinbank -- /bin/sh
+* cat /var/log/api/Application/Application.log
 
 # I/Fs specification:
 ## 1. {{end-point}}/coin/deposit
