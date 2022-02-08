@@ -3,9 +3,9 @@
 A Java coding skill test.
 
 # Requirements
-
-`docker`
-`docker-compose`
+### Local
+* Download and install `Docker Desktop`
+* Download and run `Minikube` using command: minikube start --vm-driver=docker --memory='4000mb'
 
 # Deployment using docker-compose:
 * Close previous running container: -> docker-compose down
