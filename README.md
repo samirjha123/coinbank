@@ -2,17 +2,19 @@
 
 A Java coding skill test.
 
-# Requirements
-### Local
-* Download and install `Docker Desktop`
-* Download and run `Minikube` using command: minikube start --vm-driver=docker --memory='4000mb'
-
-# Deployment using docker-compose:
+# Local deployment using docker-compose:
+* Change mongo db url in application.yml
 * Close previous running container: -> docker-compose down
 * Build jar file: -> mvn clean install
 * Build and execute docker image: ->  docker-compose up --build -d
 
 # Deployment using k8s:
+## Requirements:
+### Set up
+* Download and install `Docker Desktop`
+* Download and run `Minikube` using command: minikube start --vm-driver=docker --memory='4000mb'
+
+## Deployment Process:
 ### Build docker image
 * docker build --tag coinbank:0.0.1-SNAPSHOT .
 ### Tag Image
