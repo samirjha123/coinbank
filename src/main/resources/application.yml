@@ -3,10 +3,10 @@ spring:
     name: coinbank
   data:
     mongodb:
+      #K8s config
       uri: mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@localhost/${MONGO_DATABASE}
-      #authentication-database: admin
-      #uri: mongodb://myUserAdmin:abc123@localhost:27017/admin
-      #uri: mongodb://piotr:Piot_123@localhost:27017/admin
+      #docker-compose config
+      #uri: mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@mongo_db:27017/${MONGO_DATABASE}
   output.ansi.enabled: ALWAYS
 logging:
   pattern:
