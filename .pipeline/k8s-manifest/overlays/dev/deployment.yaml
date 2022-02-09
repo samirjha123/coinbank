@@ -1,0 +1,81 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: coinbank
+  labels:
+    app: coinbank
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: coinbank
+  template:
+    metadata:
+      labels:
+        app: coinbank
+    spec:
+      containers:
+        - name: coinbank
+          image: samirjha123/coinbank:0.0.1-SNAPSHOT
+          ports:
+            - containerPort: 8080
+          env:
+            - name: MONGO_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  name: mongodb
+                  key: database-name
+            - name: MONGO_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb
+                  key: database-user
+            - name: MONGO_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb
+                  key: database-password
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-service
+  labels:
+    app: redis-service
+spec:
+  ports:
+    - port: 6379  #Exposed port number
+      protocol: TCP
+      targetPort: 6379  #Service port number
+  selector:
+    name: redis  #Selected Pod Tags
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb-service
+  labels:
+    app: mongodb-service
+spec:
+  ports:
+    - port: 27017
+      protocol: TCP
+  selector:
+    app: coinbank
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: coinbank-service
+  labels:
+    app: coinbank-service
+    spring-boot: "true"
+spec:
+  ports:
+    - name: http-api
+      port: 8080
+      protocol: TCP
+  selector:
+    app: coinbank
+  sessionAffinity: None
+  type: ClusterIP

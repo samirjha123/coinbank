@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: coinbank
+  redis:
+    host: ${REDIS_ENDPOINT}
+    port: 6379
+  data:
+    mongodb:
+      uri: mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_ENDPOINT}/${MONGO_DATABASE}
+  output.ansi.enabled: ALWAYS
+logging:
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} ${LOG_LEVEL_PATTERN:-%5p} %m%n"
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS

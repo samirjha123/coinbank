@@ -22,8 +22,7 @@ public class CoinInfoModel implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @JsonIgnore
-    private Long id;
+    private String id;
 
     @NotNull
     @DecimalMax("9999999.99999999") @DecimalMin("0.00000001")

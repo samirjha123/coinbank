@@ -31,6 +31,13 @@ public class CoinController {
                 .body(coinInfoService.depositCoin(coinInfoModel));
     }
 
+    @GetMapping(Constants.GET)
+    @ResponseBody
+    public ResponseEntity getCoinInfo(@Valid @RequestParam String id) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(coinInfoService.getCoinInfo(id));
+    }
+
     /**
      * list coins balance on each hour
      * @param pageable

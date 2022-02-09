@@ -1,12 +1,16 @@
-package com.anymind.coinbank.controller;
+package com.anymind.coinbank.api;
 
+import com.anymind.coinbank.controller.CoinController;
 import com.anymind.coinbank.model.CoinInfoModel;
 import com.anymind.coinbank.model.CoinListRequestModel;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.caryyu.spring.embedded.redisserver.RedisServerConfiguration;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
@@ -20,12 +24,20 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 class CoinControllerTest {
 
+    @TestConfiguration
+    static class RedisTestConfiguration {
+
+        @Bean
+        public RedisServerConfiguration redisServerConfiguration() {
+            return new RedisServerConfiguration();
+        }
+    }
+
     @Autowired
     private CoinController controller;
 
     @Autowired
     private MockMvc mockMvc;
-
 
     private static ObjectMapper mapper = new ObjectMapper();
 
@@ -38,20 +50,18 @@ class CoinControllerTest {
     void testDepositCoin() throws Exception {
 
         CoinInfoModel coinInfo = new CoinInfoModel();
-        coinInfo.setId(2L);
         coinInfo.setAmount(25.0);
         coinInfo.setDatetime("2021-08-16T20:43:39+05:30");
 
         String json = mapper.writeValueAsString(coinInfo);
         mockMvc.perform(post("/coin/deposit").contentType(MediaType.APPLICATION_JSON).characterEncoding("utf-8")
-                        .content(json).accept(MediaType.APPLICATION_JSON)).andExpect(status().isCreated());
+                .content(json).accept(MediaType.APPLICATION_JSON)).andExpect(status().isCreated());
     }
 
     @Test
     void testDepositCoinInvalidAmount() throws Exception {
 
         CoinInfoModel coinInfo = new CoinInfoModel();
-        coinInfo.setId(2L);
         coinInfo.setAmount(10000000.0);
         coinInfo.setDatetime("2021-08-16T20:43:39+05:30");
 
@@ -64,7 +74,6 @@ class CoinControllerTest {
     void testDepositCoinInvalidDate() throws Exception {
 
         CoinInfoModel coinInfo = new CoinInfoModel();
-        coinInfo.setId(2L);
         coinInfo.setAmount(100.0);
         coinInfo.setDatetime("2021-13-16T20:43:39+05:30");
 
@@ -82,7 +91,7 @@ class CoinControllerTest {
         String json = mapper.writeValueAsString(coinInfo);
 
         mockMvc.perform(post("/coin/list").contentType(MediaType.APPLICATION_JSON).characterEncoding("utf-8")
-                        .content(json).accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
+                .content(json).accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
     }
 
     @Test

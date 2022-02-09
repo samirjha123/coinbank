@@ -1,0 +1,44 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-service
+  labels:
+    app: redis-service
+spec:
+  ports:
+    - port: 6379  #Exposed port number
+      protocol: TCP
+      targetPort: 6379  #Service port number
+  selector:
+    name: redis  #Selected Pod Tags
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb-service
+  labels:
+    app: mongodb-service
+spec:
+  ports:
+    - port: 27017
+      protocol: TCP
+      targetPort: 27017
+  selector:
+    app: coinbank
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: coinbank-service
+  labels:
+    app: coinbank-service
+    spring-boot: "true"
+spec:
+  ports:
+    - port: 8080
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    app: coinbank
+  type: ClusterIP

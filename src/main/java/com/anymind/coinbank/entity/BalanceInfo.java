@@ -3,23 +3,20 @@ package com.anymind.coinbank.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.annotation.Id;
 
-import javax.persistence.*;
 import java.time.Instant;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Table(name = "balance_info")
+@Document(collection = "balanceinfo")
 public class BalanceInfo {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
-    @Column(name = "balance")
     private Double balance;
 
-    @Column(name = "date_time")
     private Instant datetime;
 }

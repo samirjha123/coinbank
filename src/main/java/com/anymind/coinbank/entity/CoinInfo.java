@@ -3,29 +3,22 @@ package com.anymind.coinbank.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
-import java.time.ZonedDateTime;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.annotation.Id;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Table(name = "coin_info")
+@Document(collection = "coininfo")
 public class CoinInfo {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
-    @Column(name = "transaction_type")
     private String transactionType;
 
-    @Column(name = "amount")
     private Double amount;
 
-    @Column(name = "date_time")
-    private ZonedDateTime datetime;
+    private String datetime;
 
-    @Column(name = "zone_id")
     private String zoneId;
 }

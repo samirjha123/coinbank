@@ -1,4 +1,4 @@
-package com.anymind.coinbank;
+package com.anymind.coinbank.api;
 
 import com.anymind.coinbank.controller.CoinController;
 import org.junit.jupiter.api.Test;
@@ -12,12 +12,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 class CoinbankApplicationTests {
 
-	@Autowired
-	private CoinController controller;
+    @Autowired
+    private CoinController controller;
 
-	@Test
-	void contextLoads() {
-		assertThat(controller).isNotNull();
-	}
+    @Test
+    void contextLoads() {
+        assertThat(controller).isNotNull();
+    }
 
 }
