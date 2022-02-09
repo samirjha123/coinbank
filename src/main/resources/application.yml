@@ -1,12 +1,12 @@
 spring:
   application:
     name: coinbank
+  redis:
+    host: ${REDIS_ENDPOINT}
+    port: 6379
   data:
     mongodb:
-      #K8s config
-      uri: mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@localhost/${MONGO_DATABASE}
-      #docker-compose config
-      #uri: mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@mongo_db:27017/${MONGO_DATABASE}
+      uri: mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_ENDPOINT}/${MONGO_DATABASE}
   output.ansi.enabled: ALWAYS
 logging:
   pattern:

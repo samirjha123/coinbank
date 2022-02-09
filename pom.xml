@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.anymind</groupId>
 	<artifactId>coinbank</artifactId>
-	<version>0.0.4-SNAPSHOT</version>
+	<version>0.0.1-SNAPSHOT</version>
 	<name>coinbank</name>
 	<description>coin collection</description>
 	<properties>
@@ -87,11 +87,25 @@
 			<version>1.4.2.Final</version>
 	    </dependency>
 		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-redis</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>redis.clients</groupId>
+			<artifactId>jedis</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>de.flapdoodle.embed</groupId>
 			<artifactId>de.flapdoodle.embed.mongo</artifactId>
 			<scope>test</scope>
 		</dependency>
-    </dependencies>
+		<dependency>
+			<groupId>com.github.caryyu</groupId>
+			<artifactId>spring-embedded-redis-server</artifactId>
+			<version>1.1</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
 
 	<build>
 		<plugins>

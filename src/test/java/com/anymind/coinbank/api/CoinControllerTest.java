@@ -4,10 +4,13 @@ import com.anymind.coinbank.controller.CoinController;
 import com.anymind.coinbank.model.CoinInfoModel;
 import com.anymind.coinbank.model.CoinListRequestModel;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.caryyu.spring.embedded.redisserver.RedisServerConfiguration;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
@@ -21,12 +24,20 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 class CoinControllerTest {
 
+    @TestConfiguration
+    static class RedisTestConfiguration {
+
+        @Bean
+        public RedisServerConfiguration redisServerConfiguration() {
+            return new RedisServerConfiguration();
+        }
+    }
+
     @Autowired
     private CoinController controller;
 
     @Autowired
     private MockMvc mockMvc;
-
 
     private static ObjectMapper mapper = new ObjectMapper();
 
